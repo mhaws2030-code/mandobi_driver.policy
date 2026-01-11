@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mandoubi - سياسة الخصوصية وحذف الحساب</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: #0f0f0f;
+      color: #eaeaea;
+      margin: 0;
+      padding: 0;
+      line-height: 1.7;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 20px;
+      background: #1a1a1a;
+      border-bottom: 1px solid #333;
+    }
+    .brand {
+      font-weight: 700;
+      font-size: 22px;
+      color: #00b8d9;
+    }
+    .section {
+      margin: 20px;
+      padding: 20px;
+      background: #1f1f1f;
+      border-radius: 12px;
+    }
+    .muted { color: #bdbdbd; }
+    .pill {
+      display: inline-block;
+      padding: 2px 10px;
+      border: 1px solid #2f2f2f;
+      border-radius: 999px;
+      font-size: 12px;
+      color: #cfcfcf;
+      background: #151515;
+      margin-inline-start: 6px;
+    }
+    button {
+      background: #00b8d9;
+      color: white;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover { opacity: 0.85; }
+    ul { margin-left: 20px; }
+    a { color: #00b8d9; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    code {
+      background: #131313;
+      border: 1px solid #2a2a2a;
+      padding: 2px 6px;
+      border-radius: 6px;
+      color: #d7d7d7;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h2 class="brand" id="brandName">Mandoubi</h2>
+    <button id="langBtn"></button>
+  </header>
+
+  <div id="content"></div>
+
+  <script>
+    const query = new URLSearchParams(window.location.search);
+    const mode = query.get("mode") || "privacy"; // privacy | delete_account
+    const langQuery = query.get("lang");
+    const supportedLanguages = ["en", "ar"];
+    const lang = supportedLanguages.includes(langQuery) ? langQuery : "ar";
+
+    const SUPPORT_EMAIL = "support@mandoubi.com"; // <-- غيّر البريد هنا
+    const APP_NAME = "Mandoubi";
+    const COMPANY_NAME = "Mandoubi"; // <-- غيّرها لو اسم الشركة مختلف
+
+    const contentDiv = document.getElementById("content");
+    const langBtn = document.getElementById("langBtn");
+    const brandName = document.getElementById("brandName");
+
+    brandName.textContent = APP_NAME;
+
+    const texts = {
+      privacy: {
+        ar: `
+          <div class="section">
+            <h1>سياسة الخصوصية</h1>
+            <p>مرحبًا بك في <strong>${APP_NAME}</strong> (تطبيق السائق). توضح هذه السياسة كيفية جمع واستخدام وحماية بياناتك عند استخدام التطبيق لتنفيذ مهام التوصيل ضمن جهة/مؤسسة.</p>
+            <p class="muted">آخر تحديث: <span class="pill">${new Date().toISOString().slice(0,10)}</span></p>
+          </div>
+
+          <div class="section">
+            <h2>البيانات التي قد نجمعها</h2>
+            <ul>
+              <li><strong>بيانات الحساب</strong>: الاسم، رقم الهاتف، البريد الإلكتروني، ومعرّفات الحساب داخل المؤسسة.</li>
+              <li><strong>بيانات التشغيل</strong>: الشيفتات، المناطق، المهام، حالة المهمة، سجل النشاط داخل التطبيق.</li>
+              <li><strong>الموقع الجغرافي أثناء استخدام التطبيق</strong>: لعرض الخريطة، تحديد المنطقة (Geo-fencing)، وتوجيهك نحو نقاط الاستلام/التسليم.
+                <span class="pill">لا نطلب تتبّع بالخلفية حاليًا</span>
+              </li>
+              <li><strong>صور/مستندات التحقق (KYC)</strong>: مثل صورة الوجه أو صور المستندات عند تفعيل/توثيق الحساب (إن كانت هذه الميزة مفعّلة لحسابك).</li>
+              <li><strong>بيانات تقنية</strong>: نوع الجهاز، إصدار النظام، سجلات أخطاء (Logs) لتحسين الأداء واستكشاف الأعطال.</li>
+            </ul>
+          </div>
+
+          <div class="section">
+            <h2>كيف نستخدم بياناتك</h2>
+            <ul>
+              <li>لتسجيل الدخول وإدارة الحساب وربطك بجهتك/مؤسستك.</li>
+              <li>لعرض الشيفتات والمناطق والمهام وتنفيذ عمليات التسليم وتحديث حالة المهمة.</li>
+              <li>لتقديم ميزات الخريطة والتوجيه داخل التطبيق أثناء الاستخدام.</li>
+              <li>للتحقق من الهوية ومنع إساءة الاستخدام (عند تفعيل KYC).</li>
+              <li>لتحسين الأداء، إصلاح الأخطاء، ودعم المستخدم.</li>
+            </ul>
+          </div>
+
+          <div class="section">
+            <h2>مشاركة البيانات</h2>
+            <p>قد تتم مشاركة بياناتك في الحدود التالية:</p>
+            <ul>
+              <li><strong>مع المؤسسة/الجهة التابعة لها</strong>: لتمكين إدارة الشيفتات والمهام ومتابعة التشغيل.</li>
+              <li><strong>مزودو خدمات تقنيون</strong>: (مثل الاستضافة/قواعد البيانات/التحليلات) وفق اتفاقيات حماية البيانات.</li>
+              <li><strong>متطلبات قانونية</strong>: إذا طُلِب ذلك بموجب القانون أو لحماية الحقوق والسلامة.</li>
+            </ul>
+          </div>
+
+          <div class="section">
+            <h2>الاحتفاظ بالبيانات</h2>
+            <p>نحتفظ بالبيانات للمدة اللازمة لتشغيل الخدمة والامتثال للالتزامات القانونية والتعاقدية. عند طلب حذف الحساب، يتم حذف/إخفاء البيانات غير الضرورية خلال <strong>30 يومًا</strong> ما لم يلزم الاحتفاظ ببعض السجلات لأسباب قانونية أو تشغيلية (مثل سجلات التسليم المطلوبة من الجهة).</p>
+          </div>
+
+          <div class="section">
+            <h2>أمان البيانات</h2>
+            <p>نطبق تدابير أمنية تقنية وتنظيمية لحماية البيانات من الوصول غير المصرح به أو التعديل أو التسريب، مثل التشفير أثناء النقل (HTTPS) وضوابط الوصول.</p>
+          </div>
+
+          <div class="section">
+            <h2>صلاحيات التطبيق</h2>
+            <ul>
+              <li><code>ACCESS_FINE_LOCATION</code> / <code>ACCESS_COARSE_LOCATION</code>: لعرض الموقع على الخريطة أثناء استخدام التطبيق.</li>
+              <li><code>CAMERA</code> / الصور: لالتقاط صور التحقق (KYC) أو إرفاق صور عند الحاجة.</li>
+              <li><code>INTERNET</code>: للتواصل مع خوادم الخدمة.</li>
+            </ul>
+            <p class="muted">ملاحظة: قد تختلف الصلاحيات حسب نسخة النظام والميزات المفعّلة لحسابك.</p>
+          </div>
+
+          <div class="section">
+            <h2>تواصل معنا</h2>
+            <p>للاستفسارات أو طلبات الخصوصية، تواصل عبر البريد:
+              <a href="mailto:${SUPPORT_EMAIL}">${SUPPORT_EMAIL}</a>
+            </p>
+          </div>
+        `,
+
+        en: `
+          <div class="section">
+            <h1>Privacy Policy</h1>
+            <p>Welcome to <strong>${APP_NAME}</strong> (Driver App). This policy explains how we collect, use, and protect your data while you use the app to perform delivery tasks within an organization.</p>
+            <p class="muted">Last updated: <span class="pill">${new Date().toISOString().slice(0,10)}</span></p>
+          </div>
+
+          <div class="section">
+            <h2>Data We May Collect</h2>
+            <ul>
+              <li><strong>Account data</strong>: name, phone number, email, and organization identifiers.</li>
+              <li><strong>Operational data</strong>: shifts, regions/zones, tasks, task status, and activity history.</li>
+              <li><strong>Location while using the app</strong>: to show the map, enforce geo-fencing, and provide navigation.
+                <span class="pill">No background tracking currently</span>
+              </li>
+              <li><strong>KYC media</strong>: selfies or ID/document images if identity verification is enabled for your account.</li>
+              <li><strong>Technical data</strong>: device model, OS version, and crash logs to improve stability.</li>
+            </ul>
+          </div>
+
+          <div class="section">
+            <h2>How We Use Your Data</h2>
+            <ul>
+              <li>To authenticate you and manage your account within your organization.</li>
+              <li>To display and operate shifts, zones, and tasks and update delivery status.</li>
+              <li>To provide map and navigation features while the app is in use.</li>
+              <li>To verify identity and prevent abuse (when KYC is enabled).</li>
+              <li>To troubleshoot issues and improve app performance.</li>
+            </ul>
+          </div>
+
+          <div class="section">
+            <h2>Data Sharing</h2>
+            <p>We may share data only as necessary:</p>
+            <ul>
+              <li><strong>With your organization</strong>: for shift/task operations and management.</li>
+              <li><strong>With service providers</strong>: hosting, databases, analytics under data protection agreements.</li>
+              <li><strong>Legal requirements</strong>: when required by law or to protect safety and rights.</li>
+            </ul>
+          </div>
+
+          <div class="section">
+            <h2>Data Retention</h2>
+            <p>We retain data as needed for service operation and legal/contractual obligations. When you request account deletion, non-essential data is removed or anonymized within <strong>30 days</strong>, unless certain records must be retained for legal or operational reasons (e.g., required delivery logs for your organization).</p>
+          </div>
+
+          <div class="section">
+            <h2>Security</h2>
+            <p>We apply technical and organizational measures to protect your data, such as HTTPS encryption in transit and access controls.</p>
+          </div>
+
+          <div class="section">
+            <h2>App Permissions</h2>
+            <ul>
+              <li><code>ACCESS_FINE_LOCATION</code> / <code>ACCESS_COARSE_LOCATION</code>: location on map while using the app.</li>
+              <li><code>CAMERA</code> / media: capture KYC images or attach required photos.</li>
+              <li><code>INTERNET</code>: communicate with the service backend.</li>
+            </ul>
+            <p class="muted">Note: permissions may vary depending on OS version and enabled features.</p>
+          </div>
+
+          <div class="section">
+            <h2>Contact</h2>
+            <p>For privacy requests or support, contact:
+              <a href="mailto:${SUPPORT_EMAIL}">${SUPPORT_EMAIL}</a>
+            </p>
+          </div>
+        `
+      },
+
+      delete_account: {
+        ar: `
+          <div class="section">
+            <h1>حذف الحساب</h1>
+            <p>يمكنك طلب حذف حسابك في <strong>${APP_NAME}</strong> كالتالي:</p>
+            <ul>
+              <li>افتح التطبيق → <strong>القائمة (Menu)</strong> → <strong>الإعدادات</strong> → <strong>حذف الحساب</strong>.</li>
+              <li>اتّبع خطوات التأكيد داخل التطبيق.</li>
+              <li>سيتم حذف/إخفاء بياناتك غير الضرورية خلال <strong>30 يومًا</strong> من تاريخ الطلب.</li>
+            </ul>
+            <p class="muted">في بعض المؤسسات قد يحتاج الطلب لمراجعة/موافقة المسؤول داخل الجهة قبل الإتمام.</p>
+          </div>
+
+          <div class="section">
+            <h2>حذف الحساب عبر البريد</h2>
+            <p>إذا لم تتمكن من تنفيذ الحذف من داخل التطبيق، أرسل رسالة إلى:</p>
+            <p><a href="mailto:${SUPPORT_EMAIL}">${SUPPORT_EMAIL}</a></p>
+            <ul>
+              <li>عنوان الرسالة: <strong>طلب حذف حساب - ${APP_NAME}</strong></li>
+              <li>أضف رقم الهاتف أو البريد المسجّل داخل التطبيق</li>
+              <li>اذكر اسم الجهة/المؤسسة إن وُجد</li>
+            </ul>
+          </div>
+
+          <div class="section">
+            <h2>ماذا يحدث بعد الحذف؟</h2>
+            <ul>
+              <li>لن تتمكن من تسجيل الدخول بعد اكتمال الحذف.</li>
+              <li>قد نحتفظ بسجلات محدودة إذا كانت مطلوبة قانونيًا أو تشغيليًا (مثل سجلات تسليم لازمة للمؤسسة).</li>
+            </ul>
+          </div>
+        `,
+
+        en: `
+          <div class="section">
+            <h1>Delete Account</h1>
+            <p>You can request deletion of your <strong>${APP_NAME}</strong> account as follows:</p>
+            <ul>
+              <li>Open the app → <strong>Menu</strong> → <strong>Settings</strong> → <strong>Delete Account</strong>.</li>
+              <li>Follow the in-app confirmation steps.</li>
+              <li>Your non-essential data will be removed/anonymized within <strong>30 days</strong>.</li>
+            </ul>
+            <p class="muted">In some organizations, deletion may require admin review/approval.</p>
+          </div>
+
+          <div class="section">
+            <h2>Delete via Email</h2>
+            <p>If you can’t delete from within the app, email us at:</p>
+            <p><a href="mailto:${SUPPORT_EMAIL}">${SUPPORT_EMAIL}</a></p>
+            <ul>
+              <li>Email subject: <strong>Account Deletion Request - ${APP_NAME}</strong></li>
+              <li>Include your registered phone number or email</li>
+              <li>Mention your organization name if applicable</li>
+            </ul>
+          </div>
+
+          <div class="section">
+            <h2>After Deletion</h2>
+            <ul>
+              <li>You will no longer be able to sign in once deletion completes.</li>
+              <li>We may retain limited records if required for legal/operational purposes (e.g., organization-required delivery logs).</li>
+            </ul>
+          </div>
+        `
+      }
+    };
+
+    function render(language) {
+      const selectedText = texts[mode]?.[language] || texts["privacy"]["ar"];
+      contentDiv.innerHTML = selectedText;
+      langBtn.textContent = language === "en" ? "العربية" : "English";
+      document.body.dir = language === "ar" ? "rtl" : "ltr";
+      document.documentElement.lang = language;
+    }
+
+    langBtn.addEventListener("click", () => {
+      const newLang = (document.documentElement.lang === "en") ? "ar" : "en";
+      window.location.search = `?mode=${mode}&lang=${newLang}`;
+    });
+
+    render(lang);
+  </script>
+</body>
+</html>
